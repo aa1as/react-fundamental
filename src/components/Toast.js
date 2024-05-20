@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Toast.css";
 import ToastMessage from "./ToastMessage";
 
 const Toast = ({ message }) => {
+  console.log("toast component");
+
   const buttonClickHandler = (title) => {
     console.log(title);
   };
