@@ -28,7 +28,7 @@ const PaymentForm = () => {
   const [objectState, setObjectState] = useState({
     name: "",
     price: 0,
-    today: null,
+    today: new Date(),
   });
 
   const inputTypeTextChangeHandler = (event) => {
@@ -37,17 +37,22 @@ const PaymentForm = () => {
   const inputTypeNuberChangeHandler = (event) => {
     setObjectState((prevSate) => ({ ...prevSate, price: event.target.value }));
   };
-  const inputTypDateTextChangeHandler = (event) => {
+  const inputTypTodayTextChangeHandler = (event) => {
     setObjectState((prevSate) => ({ ...prevSate, today: event.target.value }));
   };
+
   const buttonSubmitHandler = (event) => {
-    console.log(objectState.name);
-    console.log(objectState.price);
-    console.log(objectState.today);
+    event.preventDefault();
+    console.log(objectState);
+    setObjectState({
+      name: "",
+      price: 0,
+      today: new Date(),
+    });
   };
 
   return (
-    <form>
+    <form on onSubmit={buttonSubmitHandler}>
       <div className="new-payment__controls">
         <div className="new-payment__control">
           <label>이름</label>
@@ -74,14 +79,12 @@ const PaymentForm = () => {
             min="2019-01-01"
             max="2023-12-31"
             value={objectState.today}
-            onChange={inputTypDateTextChangeHandler}
+            onChange={inputTypTodayTextChangeHandler}
           />
         </div>
       </div>
       <div className="new-payment__actions">
-        <button type="button" onClick={buttonSubmitHandler}>
-          결제 추가
-        </button>
+        <button type="submit">결제 추가</button>
       </div>
     </form>
   );
