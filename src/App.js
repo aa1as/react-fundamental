@@ -22,13 +22,26 @@ function App() {
         amount: data.price,
         date: new Date(data.today),
       },
+      ...expenses,
     ]);
+  };
+
+  const deleteExpenseTtem = (index) => {
+    //1 filter
+    // const newFilteredArray = expenses.filter((item) => item.id !== id);
+    // setExpenses(newFilteredArray);
+
+    //2 slice
+    //[0,1,2,..., index-1] [index+1,index+2,...n-1]
+    const beforeArray = expenses.slice(0, index);
+    const afterArray = expenses.slice(index + 1);
+    setExpenses([...beforeArray, ...afterArray]);
   };
 
   return (
     <>
       <PaymentForm getPaymentFormData={getPaymentFormData} />
-      <Expenses items={expenses} />
+      <Expenses items={expenses} deleteExpenseTtem={deleteExpenseTtem} />
     </>
   );
 }
