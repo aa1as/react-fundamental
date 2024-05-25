@@ -1,14 +1,33 @@
-import { useState } from 'react';
-import { GoArrowDown, GoArrowUp } from 'react-icons/go';
-import Table from './Table';
+import { useState } from "react";
+import { GoArrowDown, GoArrowUp } from "react-icons/go";
+import Table from "./Table";
 
 function SortableTable(props) {
-  const [sortOrder, setSortOrder] = useState(null);
-  const [sortBy, setSortBy] = useState(null);
+  const [sortOrder, setSortOrder] = useState(null); //asc 오름차순 | desc 내림차순
+  const [sortBy, setSortBy] = useState(null); // 이름 | 점수 | 점수 제곱
   const { config, data } = props;
+
+  console.log(sortOrder);
+  console.log(sortBy);
 
   const handleClick = (label) => {
     // TODO - 정렬 화살표 클릭 시 정렬을 해주는 함수
+    if (sortOrder && label !== sortBy) {
+      setSortOrder("asc");
+      setSortBy(label);
+      return;
+    }
+
+    if (sortOrder === null) {
+      setSortOrder("asc");
+      setSortBy(label);
+    } else if (sortOrder === "asc") {
+      setSortOrder("desc");
+      setSortBy(label);
+    } else if (sortOrder === "desc") {
+      setSortOrder(null);
+      setSortBy(null);
+    }
   };
 
   const updatedConfig = config.map((column) => {
@@ -37,6 +56,16 @@ function SortableTable(props) {
     const { sortValue } = config.find((column) => column.label === sortBy);
     sortedData = [...data].sort((a, b) => {
       // TODO - 정렬된 데이터로 바꿔 끼우는 부분 들어갈 comparator 함수
+      const valueA = sortValue(a);
+      const valueB = sortValue(b);
+
+      const reversOrder = sortOrder === "asc" ? 1 : -1;
+
+      if (typeof valueA === "string") {
+        return valueA.localeCompare(valueB) * reversOrder;
+      } else {
+        return (valueA - valueB) * reversOrder;
+      }
     });
   }
 
@@ -60,13 +89,13 @@ function getIcons(label, sortBy, sortOrder) {
         <GoArrowDown />
       </div>
     );
-  } else if (sortOrder === 'asc') {
+  } else if (sortOrder === "asc") {
     return (
       <div>
         <GoArrowUp />
       </div>
     );
-  } else if (sortOrder === 'desc') {
+  } else if (sortOrder === "desc") {
     return (
       <div>
         <GoArrowDown />
