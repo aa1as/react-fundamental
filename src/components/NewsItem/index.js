@@ -1,5 +1,5 @@
-import React from 'react';
-import {NewsItemWrapper} from './style.js';
+import React from "react";
+import { NewsItemWrapper } from "./style.js";
 
 const NewsItem = (props) => {
   return (
@@ -7,7 +7,7 @@ const NewsItem = (props) => {
       <h1>{props.title}</h1>
       <div className="content">
         <h3>{props.description}</h3>
-        <img className="image" src={props.urlToImage} alt=""/>
+        <img className="image" src={props.urlToImage} alt="" />
       </div>
     </NewsItemWrapper>
   );
