@@ -32,8 +32,8 @@ const PaymentForm = ({ getPaymentFormData }) => {
 
   const buttonSubmitHander = (event) => {
     event.preventDefault();
-    getPaymentFormData(objectState);
     // console.log(objectState);
+    getPaymentFormData(objectState);
 
     setObjectState({
       name: "",
